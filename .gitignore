@@ -3,3 +3,9 @@ workspace/*
 datasets/*
 __pycache__/
 !workspace/lp_model_best.pth
+
+# Intellij
+.idea/
+*.iml
+*.iws
+
