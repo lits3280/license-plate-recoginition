@@ -31,8 +31,8 @@ cfg.farm_plate = CfgNode(new_allowed=True)
 cfg.farm_plate.p = [0.5,0.5] #[COMMON, XUE]
 
 cfg.white_plate = CfgNode(new_allowed=True)
-cfg.white_plate.p = [0.0,0.2,0.2,0.2,0.1,0.1,0.2] #[COMMON,JINGCHA,JUNDUI,JUNDUI_M,WUJIN,WUJIN_M,YINGJI]
-cfg.white_plate.front = 0.2
+cfg.white_plate.p = [0.0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1] #[COMMON,JINGCHA,JUNDUI,JUNDUI_M,WUJIN,WUJIN_M,YINGJI,WJ_99,WJ_99_M,WJ_12,WJ_12_M,]
+cfg.white_plate.front = 0.5
 
 cfg.airport_plate = CfgNode(new_allowed=True)
 cfg.airport_plate.p = [1]

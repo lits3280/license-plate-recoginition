@@ -14,8 +14,8 @@ aug = A.Compose([
     A.OneOf([  #雨雾日光阴影
         A.RandomRain(drop_length=5, blur_value=4, brightness_coefficient=0.8, p=0.5),
         A.RandomFog(fog_coef_lower=0.1, fog_coef_upper=0.5, alpha_coef=0.05, p=0.2),
-        A.RandomShadow(shadow_roi=(0.1,0.,0.9,0.6), shadow_dimension=4, p=0.2),
-        A.RandomSunFlare(flare_roi=(0.1,0.1,1.,1.), src_radius=100, p=0.2),
+        # A.RandomShadow(shadow_roi=(0.1,0.,0.9,0.6), shadow_dimension=4, p=0.2), #去掉，会产生阴影块
+        A.RandomSunFlare(flare_roi=(0.1,0.1,1.,1.), src_radius=75, p=0.2),  #减小光圈大小
         # A.RandomSnow(snow_point_lower=0.1, snow_point_upper=0.2, brightness_coeff=2, p=0.1)
         ], p=1),
     A.MotionBlur(p=0.3),  # 动态模糊
@@ -23,7 +23,7 @@ aug = A.Compose([
     A.OneOf([ #模糊
         A.MedianBlur(blur_limit=7, p=0.8),  #中值模糊blur_limit为奇
         A.Blur(blur_limit=9, p=0.8),
-        A.GlassBlur(sigma=0.7, max_delta=3, p=0.2) #棱镜模糊
+        # A.GlassBlur(sigma=0.7, max_delta=3, p=0.2) #棱镜模糊 【去掉，会产生毛边】
         ], p=0.5),
     A.OneOf([  #噪声
         A.ISONoise(color_shift=(0.04, 0.08), intensity=(0.2, 0.6), p=0.9),
@@ -31,16 +31,16 @@ aug = A.Compose([
         A.MultiplicativeNoise(multiplier=(0.8, 1.2), p=0.9),
         A.GaussNoise(var_limit=(40.0, 100.0), p=1),
         ], p=1),
-    A.CoarseDropout(max_holes=4, max_height=15, max_width=15, p=0.2),  #挖小洞
-    #非刚体变换方法
-    A.OpticalDistortion(distort_limit=0.2, shift_limit=0.2, border_mode=cv2.BORDER_CONSTANT, p=1),
-    A.IAAPiecewiseAffine(scale=(0.02, 0.03), nb_cols=3, nb_rows=2, p=1), #网格仿射变换
-    A.RandomBrightnessContrast(brightness_limit=0.4, p=0.7),  # 随机光照和对比度
+    # A.CoarseDropout(max_holes=4, max_height=15, max_width=15, p=0.2),  #挖小洞 【去掉】
+    # #非刚体变换方法(去掉，文字会扭曲)
+    # A.OpticalDistortion(distort_limit=0.2, shift_limit=0.2, border_mode=cv2.BORDER_CONSTANT, p=1),
+    # A.IAAPiecewiseAffine(scale=(0.02, 0.03), nb_cols=3, nb_rows=2, p=1), #网格仿射变换
+    A.RandomBrightnessContrast(brightness_limit=0.3, p=0.7),  # 随机光照和对比度
     A.RGBShift(r_shift_limit=25, g_shift_limit=25, b_shift_limit=25, always_apply=False, p=0.5),
     A.OneOf([
         A.RandomGamma(gamma_limit=(60, 120), p=0.4), #伽马变换
         A.CLAHE(clip_limit=2, p=0.4),  #自适应直方图均衡
-        A.IAASharpen(p=0.4),  #锐化
+        # A.IAASharpen(p=0.4),  #锐化 【去掉，会导致出现很多麻点】
         A.IAAEmboss(p=0.4),  #浮雕
         ], p=0.4),
     ], p=1)
